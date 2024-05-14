@@ -7,7 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -33,95 +35,89 @@ import androidx.compose.ui.unit.sp
 import com.gcolina.freebies.R
 import com.gcolina.freebies.util.Constant.Companion.GRADIENT_COLORS
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun CommonCardAnimation(
     title: String,
     imageCard: String,
     shortDetail: String,
-    navigateToDetail: () -> Unit,
+    navigateToDetail: () -> Unit
 ) {
     var showExtra by rememberSaveable { mutableStateOf(false) }
-
-    Card(
-        colors = CardDefaults.cardColors(Color.White),
-        modifier =
+    Column {
+        Card(
+            colors = CardDefaults.cardColors(Color.White),
+            modifier =
             Modifier
                 .fillMaxWidth()
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp)
                 .clickable { showExtra = !showExtra }
                 .animateContentSize(
                     animationSpec =
-                        tween(
-                            durationMillis = 300,
-                            easing = LinearOutSlowInEasing,
-                        ),
+                    tween(
+                        durationMillis = 300,
+                        easing = LinearOutSlowInEasing
+                    )
                 ),
-        shape = RoundedCornerShape(topEnd = 20.dp),
-        elevation = CardDefaults.outlinedCardElevation(8.dp),
-    ) {
-        Column(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            shape = RoundedCornerShape(topEnd = 20.dp),
+            elevation = CardDefaults.outlinedCardElevation(8.dp)
         ) {
-            Card(
-                shape = RoundedCornerShape(topEnd = 20.dp),
-                modifier =
+            Column(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Card(
+                    shape = RoundedCornerShape(topEnd = 20.dp),
+                    modifier =
                     Modifier
                         .height(200.dp)
                         .fillMaxWidth()
-                        .padding(start = 5.dp, end = 5.dp, top = 5.dp),
-            ) {
-                ShowImageWhitCoil(
-                    image = imageCard,
-                )
-            }
-            Text(
-                text = title,
-                fontSize = 25.sp,
-                style =
+                        .padding(start = 5.dp, end = 5.dp, top = 5.dp)
+                ) {
+                    ShowImageWhitCoil(
+                        image = imageCard
+                    )
+                }
+                Text(
+                    text = title,
+                    fontSize = 35.sp,
+                    style =
                     TextStyle(
                         brush =
-                            Brush.linearGradient(
-                                // Esta definido dentro de la carpeta util en las constantes
-                                colors = GRADIENT_COLORS,
-                            ),
+                        Brush.linearGradient(
+                            // Esta definido dentro de la carpeta util en las constantes
+                            colors = GRADIENT_COLORS
+                        )
                     ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(5.dp),
-            )
-            if (showExtra) {
-                Row(
-                    modifier =
+                    fontFamily = FontFamily(Font(R.font.josefinsans_semibold)),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(5.dp)
+                )
+                if (showExtra) {
+                    Column(
+                        modifier =
                         Modifier
                             .fillMaxWidth()
                             .padding(10.dp),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = shortDetail,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                    )
-
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = shortDetail,
+                            // maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = 15.sp,
+                            fontFamily = FontFamily(Font(R.font.josefinsans_semibold)),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                } else {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_rigth_arrow),
-                        contentDescription = null,
-                        modifier =
-                            Modifier
-                                .weight(0.1f)
-                                .clickable { navigateToDetail() },
+                        painter = painterResource(id = R.drawable.ic_expand),
+                        contentDescription = null
                     )
                 }
-            } else {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_expand),
-                    contentDescription = null,
-                )
             }
         }
     }

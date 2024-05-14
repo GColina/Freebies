@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:filename")
+
 package com.gcolina.freebies.util
 
 import androidx.compose.foundation.layout.Arrangement
@@ -15,54 +17,55 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.gcolina.freebies.R
 
 @Composable
-fun CommonCard(
-    name: String, imageCard: String
-) {
-        Card(
-            colors = CardDefaults.cardColors(White),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
-            shape = RoundedCornerShape(topEnd = 20.dp),
-            elevation = CardDefaults.outlinedCardElevation(8.dp)
+fun CommonCard(name: String, imageCard: String) {
+    Card(
+        colors = CardDefaults.cardColors(White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+        shape = RoundedCornerShape(topEnd = 20.dp),
+        elevation = CardDefaults.outlinedCardElevation(8.dp)
+    ) {
+        Column(
+            modifier = Modifier,
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            Card(
+                shape = RoundedCornerShape(topEnd = 20.dp),
+                modifier = Modifier
+                    .height(200.dp)
+                    .fillMaxWidth()
+                    .padding(start = 5.dp, end = 5.dp, top = 5.dp)
             ) {
-                Card(
-                    shape = RoundedCornerShape(topEnd = 20.dp),
-                    modifier = Modifier
-                        .height(200.dp)
-                        .fillMaxWidth()
-                        .padding(start = 5.dp, end = 5.dp, top = 5.dp)
-                ) {
-                    ShowImageWhitCoil(
-                        image = imageCard
-                    )
-                }
-                Text(
-                    text = name,
-                    fontSize = 25.sp,
-                    style = TextStyle(
-                        brush = Brush.linearGradient(
-                            //Esta definido dentro de la carpeta util en las constantes
-                            colors = Constant.GRADIENT_COLORS
-                        )
-                    ),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(5.dp)
+                ShowImageWhitCoil(
+                    image = imageCard
                 )
             }
+            Text(
+                text = name,
+                fontSize = 25.sp,
+                fontFamily = FontFamily(Font(R.font.josefinsans_semibold)),
+                style = TextStyle(
+                    brush = Brush.linearGradient(
+                        // Esta definido dentro de la carpeta util en las constantes
+                        colors = Constant.GRADIENT_COLORS
+                    )
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(5.dp)
+            )
         }
     }
+}
 
     /*Row(modifier = Modifier.fillMaxWidth()) {
         Card(

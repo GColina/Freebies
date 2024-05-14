@@ -1,14 +1,14 @@
+@file:Suppress("ktlint:standard:filename")
+
 package com.gcolina.freebies.model
 
 import com.google.gson.annotations.SerializedName
 
 class GameModel : ArrayList<GameModelItem>()
 
-
-
 data class GameModelItem(
     // @SerializedName("developer") val developer: String,
-    //@SerializedName("freetogame_profile_url") val freetogame_profile_url: String,
+    // @SerializedName("freetogame_profile_url") val freetogame_profile_url: String,
     // @SerializedName("game_url") val game_url: String,
     @SerializedName("genre") val genre: String,
     @SerializedName("id") val id: Int,

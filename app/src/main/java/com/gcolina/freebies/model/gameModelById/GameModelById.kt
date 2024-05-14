@@ -2,8 +2,6 @@ package com.gcolina.freebies.model.gameModelById
 
 import com.google.gson.annotations.SerializedName
 
-class DetailModel : ArrayList<GameModelById>()
-
 data class GameModelById(
     @SerializedName("developer") val developer: String,
     @SerializedName("description") val description: String,
@@ -11,9 +9,8 @@ data class GameModelById(
     @SerializedName("game_url") val gameUrl: String,
     @SerializedName("genre") val genre: String,
     @SerializedName("id") val id: Int,
-    @SerializedName("minimum_system_requirements") val minimumSystemRequirements:
-    @Suppress("ktlint:standard:max-line-length")
-    MinimumSystemRequirements,
+    @SerializedName("minimum_system_requirements")
+    val minimumSystemRequirements: MinimumSystemRequirements?,
     @SerializedName("platform") val platform: String,
     @SerializedName("publisher") val publisher: String,
     @SerializedName("release_date") val releaseDate: String,

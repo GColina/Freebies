@@ -23,31 +23,36 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.gcolina.freebies.R
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarHome() {
-
+fun TopBarHome(onTextValueChanged: (String) -> Unit) {
     var textValue by remember { mutableStateOf("") }
     Row(
         modifier = Modifier
             .padding(top = 10.dp, start = 10.dp, end = 10.dp, bottom = 3.dp)
-            .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = {
-
-        }) {
+        IconButton(onClick = { }) {
             Image(
                 painter = painterResource(id = R.drawable.btn_menu),
                 contentDescription = null
             )
         }
+
         OutlinedTextField(
-            value = textValue, onValueChange = { textValue = it },
+            value = textValue,
+            onValueChange = { newValue ->
+                textValue = newValue
+                onTextValueChanged(newValue)
+            },
             shape = RoundedCornerShape(10.dp),
             singleLine = true,
             textStyle = TextStyle(color = colorResource(id = R.color.background_home)),
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.White,
+                disabledLabelColor = Color.Transparent
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterVertically),
@@ -59,9 +64,5 @@ fun TopBarHome() {
                 )
             }
         )
-
     }
-
 }
-
-

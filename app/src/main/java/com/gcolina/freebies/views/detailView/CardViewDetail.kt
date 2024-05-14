@@ -1,6 +1,7 @@
 package com.gcolina.freebies.views.detailView
 
-import androidx.compose.foundation.layout.Arrangement.SpaceBetween
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,49 +9,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gcolina.freebies.R
 import com.gcolina.freebies.util.CustomButton
 import com.gcolina.freebies.util.CustomEmptyButton
-import com.gcolina.freebies.viewModel.DetailViewModel
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ViewDetail(viewModel: DetailViewModel = hiltViewModel()) {
-    val characters by viewModel.gameById.collectAsState()
-
-    Column(
-        modifier =
-        Modifier
-            .fillMaxSize()
-    ) {
-        characters?.let { characters ->
-        }
-    }
-}
 
 @Composable
-fun CardDetail(title: String, description: String) {
+fun CardDetail(title: String, description: String, modifier: Modifier, url: String) {
+    val context = LocalContext.current
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(enabled = true, state = rememberScrollState()),
+        modifier = modifier,
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         colors = CardDefaults.cardColors(colorResource(id = R.color.background_home))
     ) {
@@ -59,24 +42,31 @@ fun CardDetail(title: String, description: String) {
                 text = title,
                 color = Color.White,
                 fontSize = 34.sp,
+                fontFamily = FontFamily(Font(R.font.josefinsans_semibold)),
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
             Text(
                 text = description,
                 color = Color.White,
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.josefinsans_semibold)),
+                maxLines = 5,
+                overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(30.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = SpaceBetween) {
-                Column(modifier = Modifier.weight(0.4f)) {
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.weight(0.6f)) {
                     CustomEmptyButton(
                         title = "FREE",
                         textColor = Color.Green,
-                        colorBackground = colorResource(id = R.color.background_home),
+                        colorBackground = Color.Transparent,
                         textSize = 12,
                         modifier = Modifier
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
+
+                    Spacer(modifier = Modifier.weight(0.2f))
                     CustomButton(
                         title = "ACTIVE",
                         textColor = colorResource(id = R.color.background_home),
@@ -85,14 +75,23 @@ fun CardDetail(title: String, description: String) {
                         modifier = Modifier
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
-                CustomButton(
-                    title = "DOWNLOAD",
-                    textColor = colorResource(id = R.color.background_home),
-                    colorBackground = colorResource(id = R.color.special_button),
-                    textSize = 35,
-                    modifier = Modifier.weight(1f)
-                )
+                // Spacer(modifier = Modifier.weight(0.1f))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                ) {
+                    CustomButton(
+                        title = "DOWNLOAD",
+                        textColor = colorResource(id = R.color.background_home),
+                        colorBackground = colorResource(id = R.color.special_button),
+                        textSize = 30,
+                        modifier = Modifier,
+                        onClick = {
+                            context.startActivity(intent)
+                        }
+                    )
+                }
             }
         }
     }
